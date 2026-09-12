@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shubham Pandey — Data Engineer Portfolio</title>
+
+<!--
+  =====================================================================
+  WELCOME! This whole website lives in ONE file: index.html
+  All the styling (CSS) and interactivity (JavaScript) are built right
+  into this file, so there is nothing else to configure to get it
+  running. Just open this file in a browser, or upload it to GitHub
+  Pages, and it works.
+
+  Look for comments like this one — they mark every spot where YOU
+  can safely make changes (photo, projects, links, colors, text)
+  without breaking anything.
+  =====================================================================
+-->
+
+<!-- Google Fonts: Source Sans 3 (body text) + Source Serif 4 (headings) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome icons (used for the social icons and small UI icons) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+  /* =====================================================================
+     1) COLOR & THEME SETTINGS
+     ---------------------------------------------------------------------
+     Everything in this site references the --accent variable below.
+     Want a different accent color? Change the one line marked ACCENT.
+     ===================================================================== */
+  :root{
+    --accent: #5e81ac;         /* <-- ACCENT: change this hex code to re-theme the whole site */
+    --accent-dark: #4c6a8f;
+    --text-dark: #2b2f36;
+    --text-muted: #6b7280;
+    --bg-white: #ffffff;
+    --bg-soft: #f6f7f9;
+    --border-color: #e6e8eb;
+    --sidebar-width: 280px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    background: var(--bg-white);
+    color: var(--text-dark);
+    font-family: 'Source Sans 3', Arial, sans-serif;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4{
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin: 0 0 0.5em 0;
+  }
+
+  a{ color: var(--accent); text-decoration: none; }
+  a:hover{ color: var(--accent-dark); }
+
+  img{ max-width: 100%; display: block; }
+
+  ul{ list-style: none; margin:0; padding:0; }
+
+  /* =====================================================================
+     2) TOP HEADER BAR
+     "Portfolio" logo on the left + social icons on the right.
+     This bar sits above everything and scrolls away with the page
+     (the SIDEBAR below is the one that stays fixed).
+     ===================================================================== */
+  .top-header{
+    margin-left: var(--sidebar-width);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-white);
+  }
+
+  .top-header .logo{
+    font-family: 'Source Serif 4', serif;
+    font-weight:700;
+    font-size:1.3rem;
+    color: var(--text-dark);
+    letter-spacing: 0.5px;
+  }
+  .top-header .logo span{ color: var(--accent); }
+
+  .top-header .social-icons a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px; height:36px;
+    margin-left:10px;
+    border-radius:50%;
+    border:1px solid var(--border-color);
+    color: var(--text-muted);
+    transition: all .2s ease;
+  }
+  .top-header .social-icons a:hover{
+    background: var(--accent);
+    border-color: var(--accent);
+    color:#fff;
+  }
+
+  /* =====================================================================
+     3) FIXED LEFT SIDEBAR
+     Contains your name, job title, navigation links, and social icons
+     pinned to the bottom. It stays in place while the page scrolls.
+     ===================================================================== */
+  .sidebar{
+    position:fixed;
+    top:0; left:0;
+    width: var(--sidebar-width);
+    height:100vh;
+    background: var(--text-dark);
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    padding: 40px 30px;
+    z-index: 100;
+  }
+
+  .sidebar-top .name{
+    /* CHANGE ME: your name */
+    font-family:'Source Serif 4', serif;
+    font-size:1.6rem;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:4px;
+  }
+  .sidebar-top .title{
+    /* CHANGE ME: your job title */
+    font-size:0.95rem;
+    color: var(--accent);
+    font-weight:600;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    margin-bottom: 40px;
+  }
+
+  .sidebar-nav li{ margin-bottom: 18px; }
+  .sidebar-nav a{
+    color: rgba(255,255,255,0.75);
+    font-weight:600;
+    font-size:0.95rem;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    transition:color .2s ease;
+  }
+  .sidebar-nav a:hover,
+  .sidebar-nav a.active{ color:#fff; }
+  .sidebar-nav a i{ width:22px; color: var(--accent); }
+
+  .sidebar-social{ display:flex; gap:10px; }
+  .sidebar-social a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:38px; height:38px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.25);
+    color:#fff;
+    transition: all .2s ease;
+  }
+  .sidebar-social a:hover{ background: var(--accent); border-color: var(--accent); }
+
+  /* Hamburger button, only appears on small screens to open/close the sidebar */
+  .sidebar-toggle{
+    display:none;
+    position:fixed;
+    top:16px; left:16px;
+    z-index: 200;
+    width:44px; height:44px;
+    border-radius:8px;
+    background: var(--text-dark);
+    color:#fff;
+    border:none;
+    font-size:1.1rem;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+
+  /* =====================================================================
+     4) MAIN CONTENT WRAPPER
+     Everything except the sidebar is pushed right by --sidebar-width
+     so it never sits underneath the fixed sidebar.
+     ===================================================================== */
+  .main-content{
+    margin-left: var(--sidebar-width);
+  }
+
+  section{
+    padding: 90px 40px;
+    max-width: 1100px;
+  }
+
+  section .section-label{
+    display:inline-block;
+    color: var(--accent);
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    font-size:0.85rem;
+    margin-bottom:10px;
+  }
+
+  /* =====================================================================
+     5) BANNER SECTION (About) — bio on the left, circular photo on the right
+     ===================================================================== */
+  .banner{
+    display:flex;
+    align-items:center;
+    gap: 60px;
+    flex-wrap: wrap;
+    padding-top: 70px;
+  }
+  .banner-text{ flex: 1 1 420px; }
+  .banner-text h1{ font-size:2.4rem; line-height:1.25; }
+  .banner-text p{
+    color: var(--text-muted);
+    font-size:1.05rem;
+    line-height:1.75;
+    margin-top: 18px;
+  }
+  .banner-photo{
+    flex: 0 0 auto;
+    display:flex;
+    justify-content:center;
+  }
+  /*
+    CHANGE ME: PROFILE PHOTO
+    -------------------------------------------------------------------
+    1. Drop your photo file into the "images" folder next to this
+       index.html file — for example: images/profile.jpg
+    2. Change the src="images/profile-placeholder.svg" below to
+       src="images/profile.jpg" (or whatever you named your file).
+    A square image (at least 400x400px) works best since it gets
+    cropped into a circle automatically.
+  */
+  .banner-photo img{
+    width: 260px;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 6px solid var(--bg-soft);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  }
+
+  /* =====================================================================
+     6) PROJECTS SECTION — responsive 3-column card grid
+     ===================================================================== */
+  .projects-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .project-card{
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition: transform .2s ease, box-shadow .2s ease;
+  }
+  .project-card:hover{
+    transform: translateY(-6px);
+    box-shadow: 0 14px 30px rgba(0,0,0,0.08);
+  }
+
+  /*
+    CHANGE ME: PROJECT IMAGE
+    -------------------------------------------------------------------
+    Put a screenshot / thumbnail for each project inside the "images"
+    folder (for example: images/project1.png) and update this card's
+    <img src="..."> below to point at it. Recommended size: 600x400px.
+  */
+  .project-card img{
+    width:100%;
+    height: 180px;
+    object-fit: cover;
+    background: var(--bg-soft);
+  }
+
+  .project-card-body{
+    padding: 22px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+  }
+
+  /* CHANGE ME: PROJECT TITLE lives in the <h3> inside project-card-body */
+  .project-card-body h3{ font-size:1.15rem; margin-bottom:10px; }
+
+  /* CHANGE ME: PROJECT DESCRIPTION lives in the <p> inside project-card-body */
+  .project-card-body p{
+    color: var(--text-muted);
+    font-size:0.95rem;
+    line-height:1.6;
+    flex:1;
+  }
+
+  /*
+    CHANGE ME: PROJECT LINK
+    -------------------------------------------------------------------
+    The button below currently points to "#" (a placeholder that does
+    nothing). Replace href="#" with the real URL of your project,
+    GitHub repo, or live demo, e.g. href="https://github.com/you/repo"
+  */
+  .btn-project{
+    display:inline-block;
+    margin-top: 18px;
+    padding: 10px 20px;
+    background: var(--accent);
+    color:#fff;
+    font-weight:600;
+    font-size:0.9rem;
+    text-align:center;
+    border-radius: 6px;
+    transition: background .2s ease;
+  }
+  .btn-project:hover{ background: var(--accent-dark); color:#fff; }
+
+  /* =====================================================================
+     7) CONTACT SECTION
+     ===================================================================== */
+  .contact-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 40px;
+  }
+  .contact-item{
+    padding: 26px;
+    background: var(--bg-soft);
+    border-radius: 10px;
+    text-align:center;
+  }
+  .contact-item i{
+    font-size:1.6rem;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .contact-item h4{ font-size:1rem; margin-bottom:6px; }
+  .contact-item p, .contact-item a{
+    color: var(--text-muted);
+    font-size:0.95rem;
+    word-break: break-word;
+  }
+
+  /* =====================================================================
+     8) FOOTER
+     ===================================================================== */
+  footer{
+    margin-left: var(--sidebar-width);
+    padding: 30px 40px;
+    text-align:center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    font-size:0.85rem;
+  }
+
+  /* =====================================================================
+     9) RESPONSIVE BEHAVIOR
+     - Under 1000px: project cards go from 3 columns down to 2.
+     - Under 900px: the sidebar slides off-screen and turns into a
+       toggle-able mobile menu, opened with the hamburger button.
+     - Under 600px: cards and contact items go to a single column.
+     ===================================================================== */
+  @media (max-width: 1000px){
+    .projects-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 900px){
+    :root{ --sidebar-width: 260px; }
+    .sidebar{
+      transform: translateX(-100%);
+      transition: transform .3s ease;
+      box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+    }
+    .sidebar.open{ transform: translateX(0); }
+    .top-header, .main-content, footer{ margin-left: 0; }
+    .sidebar-toggle{ display:flex; }
+    .top-header{ padding-left: 70px; }
+  }
+
+  @media (max-width: 600px){
+    .projects-grid{ grid-template-columns: 1fr; }
+    .contact-grid{ grid-template-columns: 1fr; }
+    .banner{ flex-direction: column-reverse; text-align:center; }
+    .banner-text p{ text-align:left; }
+    section{ padding: 60px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hamburger menu button — only visible on small/mobile screens -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle navigation menu">
+  <i class="fa-solid fa-bars"></i>
+</button>
+
+<!-- =====================================================================
+     FIXED LEFT SIDEBAR
+     CHANGE ME: your name, job title, and social links are all here.
+     ===================================================================== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <!-- CHANGE ME: your name -->
+    <div class="name">Shubham Pandey</div>
+    <!-- CHANGE ME: your job title -->
+    <div class="title">Data Engineer</div>
+
+    <nav>
+      <ul class="sidebar-nav">
+        <li><a href="#about"><i class="fa-solid fa-user"></i>About</a></li>
+        <li><a href="#projects"><i class="fa-solid fa-diagram-project"></i>Projects</a></li>
+        <li><a href="#contact"><i class="fa-solid fa-envelope"></i>Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!--
+    CHANGE ME: SOCIAL ICONS (sidebar bottom)
+    Replace the href="..." values with your real profile links.
+    To add another icon, copy one <a> line and change the icon class
+    (browse icons at https://fontawesome.com/icons) and the link.
+  -->
+  <div class="sidebar-social">
+    <a href="https://www.linkedin.com/in/shubhampandey08/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="mailto:shubhampandey11aug@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+  </div>
+</aside>
+
+<!-- =====================================================================
+     TOP HEADER BAR — logo + social icons
+     ===================================================================== -->
+<header class="top-header">
+  <div class="logo">Data<span>Portfolio</span></div>
+  <!-- CHANGE ME: these can be the same links as the sidebar social icons -->
+  <div class="social-icons">
+    <a href="https://www.linkedin.com/in/shubhampandey08/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    <a href="mailto:shubhampandey11aug@gmail.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+    <a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+  </div>
+</header>
+
+<div class="main-content">
+
+  <!-- ===================================================================
+       BANNER / ABOUT SECTION
+       CHANGE ME: your bio text and profile photo live here.
+       =================================================================== -->
+  <section id="about" class="banner">
+    <div class="banner-text">
+      <span class="section-label">Welcome</span>
+      <h1>Hi, I'm Shubham Pandey.<br>I build reliable data platforms.</h1>
+      <!-- CHANGE ME: your bio paragraph -->
+      <p>
+        I'm a Data Engineer focused on building scalable, reliable data platforms and
+        analytics solutions using Microsoft Fabric, Databricks, Power BI, Azure, PySpark,
+        SQL, and Delta Lake. I specialize in designing modern data pipelines, optimizing
+        data processing, and transforming complex datasets into trusted, business-ready
+        insights. I enjoy solving real-world data challenges across cloud and enterprise
+        environments while continuously exploring modern data engineering and AI
+        technologies. I'm open to Data Engineering roles, freelance projects, and
+        consulting opportunities where I can help organizations build high-performance,
+        scalable data solutions.
+      </p>
+    </div>
+
+    <div class="banner-photo">
+      <!--
+        CHANGE ME: PROFILE PHOTO
+        1. Add your photo file to the images/ folder, e.g. images/profile.jpg
+        2. Change the src below from images/profile-placeholder.svg
+           to images/profile.jpg
+      -->
+      <img src="images/profile-placeholder.svg" alt="Photo of Shubham Pandey">
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       PROJECTS SECTION
+       CHANGE ME: this is where your project cards live. A demo card is
+       provided below — see the comments inside it for how to edit it,
+       and the "HOW TO ADD MORE PROJECTS" comment for duplicating it.
+       =================================================================== -->
+  <section id="projects">
+    <span class="section-label">Portfolio</span>
+    <h2>Projects</h2>
+
+    <div class="projects-grid">
+
+      <!--
+        =================================================================
+        HOW TO ADD MORE PROJECTS
+        -----------------------------------------------------------------
+        To add a new project, copy everything from the opening
+        <div class="project-card"> tag below to its matching closing
+        </div> tag, paste it right after, and then edit the copy's
+        image, title, description, and link as marked inside it.
+        You can add as many cards as you like — the grid will
+        automatically wrap them into new rows.
+        =================================================================
+      -->
+
+      <!-- ============ PROJECT CARD (demo — copy this whole block to add more) ============ -->
+      <div class="project-card">
+        <!-- CHANGE ME: PROJECT IMAGE — put your screenshot in images/ and update this src -->
+        <img src="images/project-placeholder.svg" alt="Project thumbnail">
+        <div class="project-card-body">
+          <!-- CHANGE ME: PROJECT TITLE -->
+          <h3>Sales Analytics Pipeline</h3>
+          <!-- CHANGE ME: PROJECT DESCRIPTION -->
+          <p>
+            An end-to-end data pipeline built with PySpark and Delta Lake on
+            Microsoft Fabric, transforming raw sales data into a curated model
+            and visualizing key metrics in an interactive Power BI dashboard.
+          </p>
+          <!-- CHANGE ME: PROJECT LINK — replace "#" with your real project URL -->
+          <a href="#" class="btn-project">View Project</a>
+        </div>
+      </div>
+      <!-- ============ END PROJECT CARD ============ -->
+
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       CONTACT SECTION
+       CHANGE ME: email, LinkedIn, and location are set here.
+       =================================================================== -->
+  <section id="contact">
+    <span class="section-label">Get In Touch</span>
+    <h2>Contact</h2>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <i class="fa-solid fa-envelope"></i>
+        <h4>Email</h4>
+        <!-- CHANGE ME: your email address -->
+        <a href="mailto:shubhampandey11aug@gmail.com">shubhampandey11aug@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <i class="fa-brands fa-linkedin-in"></i>
+        <h4>LinkedIn</h4>
+        <!-- CHANGE ME: your LinkedIn URL -->
+        <a href="https://www.linkedin.com/in/shubhampandey08/" target="_blank" rel="noopener">linkedin.com/in/shubhampandey08</a>
+      </div>
+      <div class="contact-item">
+        <i class="fa-solid fa-location-dot"></i>
+        <h4>Location</h4>
+        <!-- CHANGE ME: your location -->
+        <p>Gurgaon, India</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ===================================================================
+     FOOTER
+     CHANGE ME: the name in the copyright line
+     =================================================================== -->
+<footer>
+  <p>&copy; <span id="year"></span> Shubham Pandey. All rights reserved.</p>
+</footer>
+
+<script>
+  // ---------------------------------------------------------------------
+  // JavaScript for this site. Only two small things happen here:
+  // 1. Auto-fill the current year in the footer copyright line.
+  // 2. Open/close the sidebar on small screens via the hamburger button,
+  //    and highlight the current section's nav link while scrolling.
+  // You do not need to change anything in this script.
+  // ---------------------------------------------------------------------
+
+  // 1) Auto-update the copyright year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // 2) Mobile sidebar toggle
+  const sidebar = document.getElementById('sidebar');
+  const toggleBtn = document.getElementById('sidebarToggle');
+
+  toggleBtn.addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+  });
+
+  // Close the mobile sidebar automatically after clicking a nav link
+  document.querySelectorAll('.sidebar-nav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      sidebar.classList.remove('open');
+    });
+  });
+
+  // Highlight the active nav link based on which section is in view
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+
+  window.addEventListener('scroll', function(){
+    let current = '';
+    sections.forEach(function(section){
+      const sectionTop = section.offsetTop - 120;
+      if (window.scrollY >= sectionTop){
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(function(link){
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current){
+        link.classList.add('active');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
