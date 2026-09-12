@@ -396,6 +396,47 @@
     line-height:1.75;
     margin-bottom:14px;
   }
+  /* Sub-headings inside a project write-up, e.g. "Objective", "Risks & Mitigations" */
+  .modal-body h4{
+    font-family:'Source Sans 3', Arial, sans-serif;
+    font-size:0.8rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color: var(--accent);
+    margin: 26px 0 10px 0;
+  }
+  .modal-body h4:first-of-type{ margin-top: 4px; }
+  .modal-body ul{
+    margin: 0 0 14px 0;
+    padding-left: 20px;
+    list-style: disc;
+  }
+  .modal-body ul li{
+    color: var(--text-muted);
+    line-height:1.7;
+    margin-bottom: 6px;
+  }
+  .modal-body strong{ color: var(--text-dark); }
+  /* Simple stacked "risk card" used in the Risks & Mitigations section */
+  .risk-item{
+    background: var(--bg-soft);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+  }
+  .risk-item .risk-category{
+    display:block;
+    font-size:0.72rem;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .risk-item p{ margin-bottom: 6px; font-size:0.92rem; }
+  .risk-item p:last-child{ margin-bottom: 0; }
 
   /* The full write-up blocks live in the page but stay invisible until
      their matching "View Project" button is clicked. */
@@ -557,7 +598,7 @@
         2. Change the src below from images/profile-placeholder.svg
            to images/profile.jpg
       -->
-      <img src="Photo_Shubham Pandey.jpg" alt="Photo of Shubham Pandey">
+      <img src="images/profile-placeholder.svg" alt="Photo of Shubham Pandey">
     </div>
   </section>
 
@@ -594,43 +635,7 @@
           <!-- CHANGE ME: PROJECT TITLE -->
           <h3>Global Listing Intelligence Initiative</h3>
           <!-- CHANGE ME: PROJECT DESCRIPTION -->
-          <Grandeur Properties International is a global luxury real estate firm operating across London, New York, and Dubai. As the firm expanded, its manual, spreadsheet-based process for consolidating nightly listing data from all three offices could no longer keep pace — creating a visibility gap that put both deal execution and portfolio governance at risk.
-
-Objective
-Design and operationalize an automated, auditable listing ingestion pipeline within Microsoft Fabric, replacing manual consolidation with a governed Lakehouse architecture that leadership could trust without needing to understand how the data was assembled.
-
-The Problem
-The fragility of the manual process surfaced during a critical window when three major listings entered simultaneous offer negotiations: Dubai filed late, London duplicated rows, and New York was silently overwritten. Two portfolio decisions were made that morning on incorrect data. The 24–48 hour latency of manual consolidation, combined with a high probability of error at every stage, made the existing process untenable at scale.
-
-Approach
-The core shift was from manual consolidation to automated orchestration through a three-activity Microsoft Fabric pipeline:
-
-Ingest — pull all nightly office files via a wildcard pattern, map defined columns to a governed Silver table, and upsert each record using property_id as the unique key.
-Archive — copy processed files to an archive location as an immutable historical record.
-Delete — clear processed files from the landing zone to prevent reprocessing of stale data.
-
-The design was governed by four core constraints:
-
-Wildcard ingestion — captures all current and future office files with zero hardcoding, enabling zero-touch onboarding of new offices.
-Upsert write mode — keyed on property_id, guaranteeing one authoritative record per property with no duplicates.
-Ingestion timestamp — an immutable, auto-populated audit anchor recording exactly when each record entered the Silver layer.
-PII exclusion — fields such as agent personal email and internal CRM references are excluded at the mapping stage and never enter the Silver layer, enforcing privacy by design.
-
-Phased Rollout
-
-Phase 1 — Foundation (Ingest & Validate): deployed the Copy Data activity with wildcard ingestion, column mapping, PII exclusion, upsert write mode, and ingestion timestamp; validated manually against Day 1 files. Success: 9 clean records in Silver, no PII columns present.
-Phase 2 — Integrity (Upsert Verification): replaced Day 1 files with Day 2 files and re-ran the pipeline to confirm updated values were reflected with no new rows inserted. Success: confirmed upsert behaviour with zero duplicate records.
-Phase 3 — Production (Archive, Delete & Schedule): added the Archive and Delete activities and scheduled the pipeline to run daily at 6:00 AM UTC. Success: raw zone empty, archive populated, Silver reflects the latest state.
-
-Risks & Mitigations
-
-Technical — Schema Drift: An office CRM vendor renames a column without notifying Data Engineering. Mitigation: explicit column mapping means an unmapped column is silently dropped rather than breaking the pipeline; a renamed key column surfaces as a null value in Silver, detectable via a post-run validation query.
-Operational — Missing File: An office fails to submit its nightly file before the 6:00 AM UTC trigger. Mitigation: the wildcard pattern processes whatever files are present; properties from the missing office simply retain their previous values, and leadership is made aware that absence of an update doesn't mean absence of activity.
-Data Quality — Duplicate Source Records: An office CRM exports the same property twice in a single nightly file. Mitigation: upsert logic processes rows sequentially, so the last occurrence wins — acceptable for a nightly snapshot model where the final state of the day is authoritative.
-Pipeline Failure — Archive Fails After Copy Succeeds: The Delete activity does not execute because the Archive step failed. Mitigation: source files remain in the raw zone and are safely reprocessed on the next run, since upsert logic prevents duplicates; a pipeline dependency ensures Delete never runs without a confirmed Archive success.
-
-Outcome
-By decoupling ingestion from manual intervention and staging the rollout by risk (foundation, then integrity, then production scheduling), Grandeur Properties International moved from a 24–48 hour, error-prone manual process to a fully automated, auditable nightly pipeline — giving leadership a trusted, near real-time view of its global portfolio.>
+          <p>
             Built a Microsoft Fabric Lakehouse ingestion pipeline for a luxury
             real estate firm, consolidating global property listing data into
             a structured, query-ready model for downstream analytics.
@@ -826,10 +831,95 @@ By decoupling ingestion from manual intervention and staging the rollout by risk
 
     <!-- CHANGE ME: full write-up for "Global Listing Intelligence Initiative" -->
     <div class="project-detail" id="project-1">
-      <img src="images/project-placeholder.svg" alt="Global Listing Intelligence Initiative screenshot">
+      <img src="images/project1-constraints.png" alt="Global Listing Intelligence Initiative — design constraints table">
       <div class="modal-body">
         <h3>Global Listing Intelligence Initiative</h3>
-        <p>Write your full project description here — the problem, your approach, the tools used, and the outcome.</p>
+
+        <p>
+          Grandeur Properties International is a global luxury real estate
+          firm operating across London, New York, and Dubai. As the firm
+          expanded, its manual, spreadsheet-based process for consolidating
+          nightly listing data from all three offices could no longer keep
+          pace — creating a visibility gap that put both deal execution and
+          portfolio governance at risk.
+        </p>
+
+        <h4>Objective</h4>
+        <p>
+          Design and operationalize an automated, auditable listing
+          ingestion pipeline within Microsoft Fabric, replacing manual
+          consolidation with a governed Lakehouse architecture that
+          leadership could trust without needing to understand how the
+          data was assembled.
+        </p>
+
+        <h4>The Problem</h4>
+        <p>
+          The fragility of the manual process surfaced during a critical
+          window when three major listings entered simultaneous offer
+          negotiations: Dubai filed late, London duplicated rows, and New
+          York was silently overwritten. Two portfolio decisions were made
+          that morning on incorrect data. The 24–48 hour latency of manual
+          consolidation, combined with a high probability of error at every
+          stage, made the existing process untenable at scale.
+        </p>
+
+        <h4>Approach</h4>
+        <p>
+          The core shift was from manual consolidation to automated
+          orchestration through a three-activity Microsoft Fabric pipeline:
+        </p>
+        <ul>
+          <li><strong>Ingest</strong> — pull all nightly office files via a wildcard pattern, map defined columns to a governed Silver table, and upsert each record using <strong>property_id</strong> as the unique key.</li>
+          <li><strong>Archive</strong> — copy processed files to an archive location as an immutable historical record.</li>
+          <li><strong>Delete</strong> — clear processed files from the landing zone to prevent reprocessing of stale data.</li>
+        </ul>
+        <p>The design was governed by four core constraints:</p>
+        <ul>
+          <li><strong>Wildcard ingestion</strong> — captures all current and future office files with zero hardcoding, enabling zero-touch onboarding of new offices.</li>
+          <li><strong>Upsert write mode</strong> — keyed on property_id, guaranteeing one authoritative record per property with no duplicates.</li>
+          <li><strong>Ingestion timestamp</strong> — an immutable, auto-populated audit anchor recording exactly when each record entered the Silver layer.</li>
+          <li><strong>PII exclusion</strong> — fields such as agent personal email and internal CRM references are excluded at the mapping stage and never enter the Silver layer, enforcing privacy by design.</li>
+        </ul>
+
+        <h4>Phased Rollout</h4>
+        <ul>
+          <li><strong>Phase 1 — Foundation (Ingest &amp; Validate):</strong> deployed the Copy Data activity with wildcard ingestion, column mapping, PII exclusion, upsert write mode, and ingestion timestamp; validated manually against Day 1 files. <em>Success: 9 clean records in Silver, no PII columns present.</em></li>
+          <li><strong>Phase 2 — Integrity (Upsert Verification):</strong> replaced Day 1 files with Day 2 files and re-ran the pipeline to confirm updated values were reflected with no new rows inserted. <em>Success: confirmed upsert behaviour with zero duplicate records.</em></li>
+          <li><strong>Phase 3 — Production (Archive, Delete &amp; Schedule):</strong> added the Archive and Delete activities and scheduled the pipeline to run daily at 6:00 AM UTC. <em>Success: raw zone empty, archive populated, Silver reflects the latest state.</em></li>
+        </ul>
+
+        <h4>Risks &amp; Mitigations</h4>
+        <div class="risk-item">
+          <span class="risk-category">Technical — Schema Drift</span>
+          <p>An office CRM vendor renames a column without notifying Data Engineering.</p>
+          <p><strong>Mitigation:</strong> explicit column mapping means an unmapped column is silently dropped rather than breaking the pipeline; a renamed key column surfaces as a null value in Silver, detectable via a post-run validation query.</p>
+        </div>
+        <div class="risk-item">
+          <span class="risk-category">Operational — Missing File</span>
+          <p>An office fails to submit its nightly file before the 6:00 AM UTC trigger.</p>
+          <p><strong>Mitigation:</strong> the wildcard pattern processes whatever files are present; properties from the missing office simply retain their previous values, and leadership is made aware that absence of an update doesn't mean absence of activity.</p>
+        </div>
+        <div class="risk-item">
+          <span class="risk-category">Data Quality — Duplicate Source Records</span>
+          <p>An office CRM exports the same property twice in a single nightly file.</p>
+          <p><strong>Mitigation:</strong> upsert logic processes rows sequentially, so the last occurrence wins — acceptable for a nightly snapshot model where the final state of the day is authoritative.</p>
+        </div>
+        <div class="risk-item">
+          <span class="risk-category">Pipeline Failure — Archive Fails After Copy Succeeds</span>
+          <p>The Delete activity does not execute because the Archive step failed.</p>
+          <p><strong>Mitigation:</strong> source files remain in the raw zone and are safely reprocessed on the next run, since upsert logic prevents duplicates; a pipeline dependency ensures Delete never runs without a confirmed Archive success.</p>
+        </div>
+
+        <h4>Outcome</h4>
+        <p>
+          By decoupling ingestion from manual intervention and staging the
+          rollout by risk (foundation, then integrity, then production
+          scheduling), Grandeur Properties International moved from a
+          24–48 hour, error-prone manual process to a fully automated,
+          auditable nightly pipeline — giving leadership a trusted, near
+          real-time view of its global portfolio.
+        </p>
       </div>
     </div>
 
