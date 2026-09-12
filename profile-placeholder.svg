@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- This is a placeholder graphic. Replace it by adding your own photo
+       to the images/ folder and updating the src="" in index.html -->
+  <rect width="400" height="400" fill="#eef1f5"/>
+  <circle cx="200" cy="160" r="70" fill="#c3cbd6"/>
+  <path d="M60 360c0-90 63-140 140-140s140 50 140 140" fill="#c3cbd6"/>
+  <text x="200" y="390" font-family="Arial, sans-serif" font-size="16" fill="#8a93a3" text-anchor="middle">Add your photo</text>
+</svg>
