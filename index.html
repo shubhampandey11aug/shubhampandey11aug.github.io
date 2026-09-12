@@ -334,6 +334,72 @@
     transition: background .2s ease;
   }
   .btn-project:hover{ background: var(--accent-dark); color:#fff; }
+  .btn-project{ cursor:pointer; border:none; font-family:'Source Sans 3', Arial, sans-serif; }
+
+  /* =====================================================================
+     PROJECT DETAIL POPUP (MODAL)
+     ---------------------------------------------------------------------
+     When someone clicks "View Project", this popup opens on top of the
+     page and shows the full write-up + screenshot for that project.
+     You do not need to change anything in this CSS block — just fill in
+     your project content further down in the HTML (search for
+     "PROJECT DETAIL CONTENT").
+     ===================================================================== */
+  .modal-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background: rgba(20,22,26,0.65);
+    z-index: 1000;
+    align-items:center;
+    justify-content:center;
+    padding: 30px;
+  }
+  .modal-overlay.open{ display:flex; }
+
+  .modal-box{
+    background:#fff;
+    border-radius: 12px;
+    max-width: 720px;
+    width:100%;
+    max-height: 85vh;
+    overflow-y:auto;
+    position:relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+
+  .modal-close{
+    position:absolute;
+    top:16px; right:16px;
+    width:36px; height:36px;
+    border-radius:50%;
+    border:none;
+    background: var(--bg-soft);
+    color: var(--text-dark);
+    font-size:1.1rem;
+    cursor:pointer;
+    z-index:2;
+  }
+  .modal-close:hover{ background: var(--accent); color:#fff; }
+
+  .modal-box img{
+    width:100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .modal-body{ padding: 34px; }
+  .modal-body h3{ font-size:1.4rem; margin-bottom:16px; }
+  .modal-body p{
+    color: var(--text-muted);
+    line-height:1.75;
+    margin-bottom:14px;
+  }
+
+  /* The full write-up blocks live in the page but stay invisible until
+     their matching "View Project" button is clicked. */
+  .project-detail{ display:none; }
 
   /* =====================================================================
      7) CONTACT SECTION
@@ -491,7 +557,7 @@
         2. Change the src below from images/profile-placeholder.svg
            to images/profile.jpg
       -->
-      <img src="Photo_Shubham Pandey.jpg" alt="Photo of Shubham Pandey">
+      <img src="images/profile-placeholder.svg" alt="Photo of Shubham Pandey">
     </div>
   </section>
 
@@ -533,8 +599,8 @@
             real estate firm, consolidating global property listing data into
             a structured, query-ready model for downstream analytics.
           </p>
-          <!-- CHANGE ME: PROJECT LINK — replace "#" with your real project URL -->
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below. Give it a unique id (matches the id="project-1" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-1')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 1 ============ -->
@@ -549,7 +615,8 @@
             logistics client, ensuring only new or changed records are
             processed on each run to keep loads fast and efficient.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-2" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-2')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 2 ============ -->
@@ -564,7 +631,8 @@
             records from Azure SQL into a Fabric Lakehouse, enabling cleaner,
             standardized reporting on employee data.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-3" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-3')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 3 ============ -->
@@ -579,7 +647,8 @@
             trusted, well-modeled tables, improving accuracy and consistency
             for downstream financial reporting.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-4" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-4')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 4 ============ -->
@@ -594,7 +663,8 @@
             freight forwarding operation, restructuring data flows onto a
             modern cloud-based data platform.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-5" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-5')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 5 ============ -->
@@ -609,7 +679,8 @@
             commerce data from multiple sources, powering an interactive
             Power BI analytics layer for business stakeholders.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-6" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-6')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 6 ============ -->
@@ -624,7 +695,8 @@
             surfacing timely market intelligence for faster, more informed
             trading decisions.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-7" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-7')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 7 ============ -->
@@ -639,7 +711,8 @@
             customer records into a single trusted view to improve data
             quality and confidence across teams.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-8" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-8')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 8 ============ -->
@@ -654,7 +727,8 @@
             replacing legacy storage with a scalable structure built for
             faster, more reliable reporting.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-9" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-9')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 9 ============ -->
@@ -669,7 +743,8 @@
             risk teams timely visibility into foreign exchange exposure and
             market risk indicators.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-10" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-10')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 10 ============ -->
@@ -684,13 +759,135 @@
             preserve historical data changes, strengthening auditability and
             regulatory compliance.
           </p>
-          <a href="#" class="btn-project">View Project</a>
+          <!-- CHANGE ME: PROJECT DETAIL — this button opens the popup with the full write-up below (id="project-11" block further down) -->
+          <button type="button" class="btn-project" onclick="openProjectModal('project-11')">View Project</button>
         </div>
       </div>
       <!-- ============ END PROJECT CARD 11 ============ -->
 
     </div>
   </section>
+
+  <!-- ===================================================================
+       PROJECT DETAIL CONTENT (hidden until "View Project" is clicked)
+       -----------------------------------------------------------------
+       This is where your FULL project write-ups and screenshots live.
+       Each block below matches one project card above by its id
+       (project-1, project-2, etc.) — when someone clicks "View Project"
+       on a card, the matching block here is copied into the popup.
+
+       For each project, replace:
+       1. The <img src="..."> with your real screenshot
+          (put the file in images/ first, e.g. images/project1-detail.png)
+       2. The <h3> with the project title (can match the card title)
+       3. The <p> paragraph(s) with your full write-up — add as many
+          <p> paragraphs as you like, this is not limited to one line
+          like the short card description was.
+       These blocks are invisible on the page itself (they only show up
+       inside the popup), so feel free to write as much as you want here.
+       =================================================================== -->
+  <div id="project-details" style="display:none;">
+
+    <!-- CHANGE ME: full write-up for "Global Listing Intelligence Initiative" -->
+    <div class="project-detail" id="project-1">
+      <img src="images/project-placeholder.svg" alt="Global Listing Intelligence Initiative screenshot">
+      <div class="modal-body">
+        <h3>Global Listing Intelligence Initiative</h3>
+        <p>Write your full project description here — the problem, your approach, the tools used, and the outcome.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Incremental Data Ingestion Pipeline" -->
+    <div class="project-detail" id="project-2">
+      <img src="images/project-placeholder.svg" alt="Incremental Data Ingestion Pipeline screenshot">
+      <div class="modal-body">
+        <h3>Incremental Data Ingestion Pipeline</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Workforce Intelligence: Azure SQL to Lakehouse" -->
+    <div class="project-detail" id="project-3">
+      <img src="images/project-placeholder.svg" alt="Workforce Intelligence screenshot">
+      <div class="modal-body">
+        <h3>Workforce Intelligence: Azure SQL to Lakehouse</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Financial Data Transformation" -->
+    <div class="project-detail" id="project-4">
+      <img src="images/project-placeholder.svg" alt="Financial Data Transformation screenshot">
+      <div class="modal-body">
+        <h3>Financial Data Transformation</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Global Freight Forwarders: Logistics Data Modernization" -->
+    <div class="project-detail" id="project-5">
+      <img src="images/project-placeholder.svg" alt="Global Freight Forwarders screenshot">
+      <div class="modal-body">
+        <h3>Global Freight Forwarders: Logistics Data Modernization</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Unified Commerce Analytics Platform" -->
+    <div class="project-detail" id="project-6">
+      <img src="images/project-placeholder.svg" alt="Unified Commerce Analytics Platform screenshot">
+      <div class="modal-body">
+        <h3>Unified Commerce Analytics Platform</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Live Market Intelligence" -->
+    <div class="project-detail" id="project-7">
+      <img src="images/project-placeholder.svg" alt="Live Market Intelligence screenshot">
+      <div class="modal-body">
+        <h3>Live Market Intelligence</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Customer Data Trust Transformation" -->
+    <div class="project-detail" id="project-8">
+      <img src="images/project-placeholder.svg" alt="Customer Data Trust Transformation screenshot">
+      <div class="modal-body">
+        <h3>Customer Data Trust Transformation</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Inventory Data Migration to Fabric Lakehouse" -->
+    <div class="project-detail" id="project-9">
+      <img src="images/project-placeholder.svg" alt="Inventory Data Migration screenshot">
+      <div class="modal-body">
+        <h3>Inventory Data Migration to Fabric Lakehouse</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Market Risk Intelligence" -->
+    <div class="project-detail" id="project-10">
+      <img src="images/project-placeholder.svg" alt="Market Risk Intelligence screenshot">
+      <div class="modal-body">
+        <h3>Market Risk Intelligence</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+    <!-- CHANGE ME: full write-up for "Regulatory Data Governance & Historical Accountability" -->
+    <div class="project-detail" id="project-11">
+      <img src="images/project-placeholder.svg" alt="Regulatory Data Governance screenshot">
+      <div class="modal-body">
+        <h3>Regulatory Data Governance &amp; Historical Accountability</h3>
+        <p>Write your full project description here.</p>
+      </div>
+    </div>
+
+  </div>
 
   <!-- ===================================================================
        CONTACT SECTION
@@ -732,6 +929,21 @@
   <p>&copy; <span id="year"></span> Shubham Pandey. All rights reserved.</p>
 </footer>
 
+<!-- =====================================================================
+     PROJECT DETAIL POPUP (the actual popup box shown on screen)
+     You do not need to edit this — its content is filled in automatically
+     from the "PROJECT DETAIL CONTENT" blocks above, based on which
+     "View Project" button was clicked.
+     ===================================================================== -->
+<div class="modal-overlay" id="projectModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalCloseBtn" aria-label="Close">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
 <script>
   // ---------------------------------------------------------------------
   // JavaScript for this site. Only two small things happen here:
@@ -743,6 +955,43 @@
 
   // 1) Auto-update the copyright year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // -------------------------------------------------------------------
+  // 3) Project detail popup (modal)
+  // Copies the matching hidden "project-detail" block's content into the
+  // popup and shows it. You do not need to change this code — just make
+  // sure each button's onclick="openProjectModal('project-N')" id matches
+  // the id="project-N" on its detail block further up the page.
+  // -------------------------------------------------------------------
+  const projectModal = document.getElementById('projectModal');
+  const modalContent = document.getElementById('modalContent');
+  const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+  function openProjectModal(projectId){
+    const source = document.getElementById(projectId);
+    if (!source) return;
+    modalContent.innerHTML = source.innerHTML;
+    projectModal.classList.add('open');
+    document.body.style.overflow = 'hidden'; // prevent background scroll
+  }
+
+  function closeProjectModal(){
+    projectModal.classList.remove('open');
+    modalContent.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  modalCloseBtn.addEventListener('click', closeProjectModal);
+
+  // Close the popup when clicking the dark overlay outside the box
+  projectModal.addEventListener('click', function(e){
+    if (e.target === projectModal) closeProjectModal();
+  });
+
+  // Close the popup with the Escape key
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeProjectModal();
+  });
 
   // 2) Mobile sidebar toggle
   const sidebar = document.getElementById('sidebar');
