@@ -1,0 +1,59 @@
+(Workforce Intelligence)
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Workforce Intelligence | Shubham Pandey</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+  <body class="bg-slate-900 text-slate-200">
+      <div class="max-w-4xl mx-auto px-6 py-16">
+          <a href="../../index.html" class="text-blue-400 hover:text-blue-300 transition flex items-center gap-2 mb-12"><i class="fa-solid fa-arrow-left"></i> Back to
+  Portfolio</a>
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Workforce Intelligence</h1>
+          <div class="flex flex-wrap gap-3 mb-10">
+              <span class="px-3 py-1 bg-blue-900/50 text-blue-300 rounded-full text-xs mono border border-blue-700">Microsoft Fabric</span>
+              <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-xs mono border border-slate-700">Azure SQL</span>
+          </div>
+          <div class="relative group mb-16"><img src="architecture.png" class="w-full rounded-3xl border border-slate-700 shadow-2xl group-hover:border-blue-500
+  transition duration-500"><p class="text-center text-slate-500 text-sm mt-4 italic">System Architecture Diagram</p></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+              <div class="md:col-span-2 space-y-12">
+                  <section><h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-bullseye text-blue-500"></i> The Business
+  Challenge</h2><p class="text-slate-400 text-lg leading-relaxed">A technology consulting firm managed workforce reporting through manual SQL exports and Excel. With
+  growth across three global hubs, this created 48-hour turnarounds and significant data quality issues (duplicates/invalid salaries).</p></section>
+                  <section><h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-gears text-blue-500"></i> Technical
+  Implementation</h2><div class="space-y-4 text-slate-400 text-lg leading-relaxed"><p>Designed a Bronze-to-Silver lakehouse pipeline using a two-stage approach:</p><ul
+  class="list-disc pl-5 space-y-2"><li><b>Bronze Stage:</b> Incremental extraction from Azure SQL into a raw layer.</li><li><b>Silver Stage:</b> PySpark transformation
+  to deduplicate records and enrich employee data with department context.</li><li><b>Quarantine Logic:</b> Implemented a separate path for invalid records to ensure
+  only trusted data reached the reporting layer.</li></ul></div></section>
+                  <section><h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-shield-halved text-blue-500"></i>
+  Governance</h2><div class="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 text-slate-400 leading-relaxed">Established a strict reconciliation framework:
+  Bronze (332 records) $\rightarrow$ Silver (307 records), with 20 quarantined and 5 duplicates dropped, ensuring 100% accountability.</div></section>
+                  <section><h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3"><i class="fa-solid fa-chart-line text-blue-500"></i> Final
+  Impact</h2><div class="bg-blue-900/20 border border-blue-800 p-6 rounded-2xl"><p class="text-blue-100 text-xl font-semibold">Reduced report turnaround from 48 hours
+  to near real-time, producing a trusted foundation for HR reporting.</p></div></section>
+              </div>
+              <div class="bg-slate-800 p-8 rounded-3xl border border-slate-700 h-fit sticky top-24">
+                  <h3 class="text-lg font-bold text-white mb-6">Project Specs</h3>
+                  <ul class="space-y-6 text-sm"><li class="flex justify-between"><span class="text-slate-500">Platform</span> <span class="text-white font-semibold">MS
+  Fabric</span></li><li class="flex justify-between"><span class="text-slate-500">Pattern</span> <span class="text-white font-semibold">Medallion</span></li></ul>
+              </div>
+          </div>
+          <div class="mt-24"><h2 class="text-3xl font-bold text-white mb-8 text-center">Implementation Gallery</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700"><img src="img1.png" class="rounded-xl w-full h-auto mb-3"><p class="text-center
+  text-slate-500 text-sm italic">Pipeline Design</p></div>
+              <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700"><img src="img2.png" class="rounded-xl w-full h-auto mb-3"><p class="text-center
+  text-slate-500 text-sm italic">Bronze Table</p></div>
+              <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700"><img src="img3.png" class="rounded-xl w-full h-auto mb-3"><p class="text-center
+  text-slate-500 text-sm italic">Quarantine Logic</p></div>
+              <div class="bg-slate-800 p-3 rounded-2xl border border-slate-700"><img src="img4.png" class="rounded-xl w-full h-auto mb-3"><p class="text-center
+  text-slate-500 text-sm italic">Silver Table</p></div>
+          </div></div>
+      </div>
+  </body>
+  </html>
+
+  ---
